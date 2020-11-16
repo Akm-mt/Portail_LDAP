@@ -4,6 +4,21 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    app_ldap_host_default: 192.168.42.77
+    app_ldap_port_default: 389
+    #app_ldap_encryption_default: tls
+
+    env(APP_LDAP_HOST): '%env(default:app_ldap_host_default:LDAP_HOST)%'
+    env(APP_LDAP_PORT): '%env(default:app_ldap_port_default:LDAP_PORT)%'
+    #env(APP_LDAP_ENCRYPTION): '%env(default:app_ldap_encryption_default:LDAP_ENCRYPTION)%'
+
+    app_ldap_basedn_default: dc=akmt,dc=local
+    app_ldap_searchdn_default: "cn=admin,dc=akmt,dc=local"
+    app_ldap_searchpassword_default: 20Am1299
+
+    env(APP_LDAP_BASEDN): '%env(default:app_ldap_basedn_default:LDAP_BASEDN)%'
+    env(APP_LDAP_SEARCHDN): '%env(default:app_ldap_searchdn_default:LDAP_SEARCHDN)%'
+    env(APP_LDAP_SEARCHPASSWORD): '%env(default:app_ldap_searchpassword_default:LDAP_SEARCHPASSWORD)%'
 
 services:
     # default configuration for services in *this* file
@@ -29,3 +44,22 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+     # LDAP configuration
+    Symfony\Component\Ldap\Ldap:
+        arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']
+    Symfony\Component\Ldap\Adapter\ExtLdap\Adapter:
+        arguments:
+            -   host: '%env(resolve:APP_LDAP_HOST)%'
+                port: '%env(resolve:APP_LDAP_PORT)%'
+                #encryption: '%env(resolve:APP_LDAP_ENCRYPTION)%'
+                options:
+                    protocol_version: 3
+                    referrals: false
+    
+    # Custom LDAP User Provider
+    App\Security\CustomLdapUserProvider:
+        arguments:
+            - '@Symfony\Component\Ldap\Ldap'
+            - '%env(resolve:APP_LDAP_BASEDN)%'
+            - '%env(resolve:APP_LDAP_SEARCHDN)%'
+            - '20Am1299'
