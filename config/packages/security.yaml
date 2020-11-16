@@ -2,7 +2,13 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         ldap_users:
-            id: App\Security\CustomLdapUserProvider
+            ldap:
+                service: Symfony\Component\Ldap\Ldap
+                base_dn: ou=people,dc=akmt,dc=local
+                search_dn: "cn=admin,dc=akmt,dc=local"
+                search_password: 20Am1299
+                default_roles: ROLE_USER
+                uid_key: uid
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
