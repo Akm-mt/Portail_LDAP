@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+<main role="main" class="container">
+  <div class="col-12">
+  {{ dump(results) }}
+     {# {% for  entry in results %}
+        {{ dump(entry.attribues) }}
+     {% endfor %} #}
+  </div>
+</main>
+    
+   
+{% endblock %}
