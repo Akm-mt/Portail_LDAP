@@ -15,7 +15,7 @@
       {{ dump(all_entrys) }}
     </pre>
     <div style="overflow-x:auto;">
-      <table class="table table-dark">
+      <table class="table table-dark text-center">
         <thead>
           <tr>
           {% for keyAttribue in attributs_keys %}
@@ -25,23 +25,23 @@
         </thead>
         <tbody>
         {% for  entryKey1, entryValue1 in all_entrys %}
-                        
+  
             {% for entryKey2, entryValue2 in entryValue1  %}
+             
               <tr>
               {% for entryKey3, entryValue3 in entryValue2  %}
                   {% if entryKey3 == "memberOf" %}
                     {% if entryKey1 == "admins" %}
-                      <td data-field="{{entryKey1}}.{{entryKey2}}.{{entryKey3}}"><span class="badge badge-danger">{{entryKey1}}</span></td>
+                      <td data-field="{{entryKey1}}.{{entryKey2}}.{{entryKey3}}"><span class="badge badge-danger">{{entryKey1}} ({{entryValue1.count}})</span></td>
                     {% else %}
-                        <td data-field="{{entryKey1}}.{{entryKey2}}.{{entryKey3}}"><span class="badge badge-success">{{entryKey1}}</span></td>
+                        <td data-field="{{entryKey1}}.{{entryKey2}}.{{entryKey3}}"><span class="badge badge-info">{{entryKey1}} ({{entryValue1.count}})</span></td>
                     {% endif %}
                   {% else %}
-                  
                     <td data-field="{{entryKey1}}.{{entryKey2}}.{{entryKey3}}">{{entryValue3}}</td>
                   {% endif %}
               {% endfor %}
-              </tr>
             {% endfor %}
+            </tr>
           {% endfor %}
         </tbody>
       </table>
