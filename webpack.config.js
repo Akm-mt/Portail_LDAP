@@ -38,6 +38,7 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('login-page', './assets/login-page.js')
+    .addEntry('manage-users', './assets/manage-users-page.js')
     //.addEntry('page1', './assets/page1.js')
     //.addEntry('page2', './assets/page2.js')
 
