@@ -1,0 +1,44 @@
+<table id="user-table" class="table table-striped table-bordered" cellspacing="0" style="width:100%">
+        <thead>
+            <tr>            
+            <th class="text-center"><input class="selectall-checkbox" type="checkbox"></th>
+                {% for keyAttribue in attributs_keys %}
+                  <th>{{keyAttribue}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for  entryKey1, entryValue1 in all_entrys %}
+            {% if loop.last == false %}
+              <tr>
+              <td></td>
+              {% for entryKey2, entryValue2 in entryValue1  %}
+
+                  {% if entryKey2 == "memberOf" %}
+                    {% set array_memberOf = entryValue2|split(';') %}
+                    <td>
+                    {% for item in array_memberOf %}
+                      {% if item == "admins" %}
+                          <span class="badge badge-danger">{{item}}</span>
+                      {% else %}
+                         <span class="badge badge-info">{{item}}</span>
+                      {% endif %}
+                    {% endfor %}
+                    </td>
+                  {% else %}
+                    <td>{{entryValue2}}</td>
+                  {% endif %}
+              {% endfor %}
+             </tr>
+             {% endif %}
+          {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+            <th></th>
+                 {% for keyAttribue in attributs_keys %}
+                  <th>{{keyAttribue}}</th>
+                {% endfor %}
+            </tr>
+        </tfoot>
+    </table>
